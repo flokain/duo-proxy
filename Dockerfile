@@ -1,4 +1,6 @@
 FROM jumanjiman/duoauthproxy:latest
 
-RUN chmod 777 /opt/duoauthproxy -R
+USER 0
+RUN chmod 777 /opt/duoauthproxy -R 
 
+USER duo
