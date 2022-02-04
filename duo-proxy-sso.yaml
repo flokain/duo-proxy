@@ -1,0 +1,237 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: "*"
+    app.openshift.io/vcs-ref: ""
+    app.openshift.io/vcs-uri: https://github.com/flokain/duo-proxy.git
+    deployment.kubernetes.io/revision: "17"
+    image.openshift.io/triggers: '[{"from":{"kind":"ImageStreamTag","name":"duo-proxy-sso:latest","namespace":"duo-auth-proxy"},"fieldPath":"spec.template.spec.containers[?(@.name==\"duo-proxy-sso\")].image","pause":"false"}]'
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{"alpha.image.policy.openshift.io/resolve-names":"*","app.openshift.io/vcs-ref":"","app.openshift.io/vcs-uri":"https://github.com/flokain/duo-proxy.git","deployment.kubernetes.io/revision":"14","image.openshift.io/triggers":"[{\"from\":{\"kind\":\"ImageStreamTag\",\"name\":\"duo-proxy-sso:latest\",\"namespace\":\"duo-auth-proxy\"},\"fieldPath\":\"spec.template.spec.containers[?(@.name==\\\"duo-proxy-sso\\\")].image\",\"pause\":\"false\"}]","openshift.io/generated-by":"OpenShiftWebConsole"},"creationTimestamp":"2022-02-02T13:47:08Z","generation":15,"labels":{"app":"duo-proxy-sso","app.kubernetes.io/component":"duo-proxy-sso","app.kubernetes.io/instance":"duo-proxy-sso","app.kubernetes.io/name":"duo-proxy-sso","app.kubernetes.io/part-of":"duoauthproxy-app"},"managedFields":[{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:spec":{"f:template":{"f:spec":{"f:containers":{"k:{\"name\":\"duo-proxy-sso\"}":{"f:image":{}}}}}}},"manager":"openshift-controller-manager","operation":"Update","time":"2022-02-02T18:39:05Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{".":{},"f:alpha.image.policy.openshift.io/resolve-names":{},"f:app.openshift.io/vcs-ref":{},"f:app.openshift.io/vcs-uri":{},"f:image.openshift.io/triggers":{},"f:openshift.io/generated-by":{}},"f:labels":{".":{},"f:app":{},"f:app.kubernetes.io/component":{},"f:app.kubernetes.io/instance":{},"f:app.kubernetes.io/name":{},"f:app.kubernetes.io/part-of":{}}},"f:spec":{"f:progressDeadlineSeconds":{},"f:replicas":{},"f:revisionHistoryLimit":{},"f:selector":{},"f:strategy":{"f:rollingUpdate":{".":{},"f:maxSurge":{},"f:maxUnavailable":{}},"f:type":{}},"f:template":{"f:metadata":{"f:labels":{".":{},"f:app":{},"f:deploymentconfig":{}}},"f:spec":{"f:containers":{"k:{\"name\":\"duo-proxy-sso\"}":{".":{},"f:imagePullPolicy":{},"f:name":{},"f:resources":{},"f:terminationMessagePath":{},"f:terminationMessagePolicy":{},"f:volumeMounts":{".":{},"k:{\"mountPath\":\"/opt/duoauthproxy/conf/authproxy.cfg\"}":{".":{},"f:mountPath":{},"f:name":{},"f:subPath":{}},"k:{\"mountPath\":\"/opt/duoauthproxy/log\"}":{".":{},"f:mountPath":{},"f:name":{}}}}},"f:dnsPolicy":{},"f:restartPolicy":{},"f:schedulerName":{},"f:securityContext":{},"f:terminationGracePeriodSeconds":{},"f:volumes":{".":{},"k:{\"name\":\"authproxy\"}":{".":{},"f:configMap":{},"f:name":{}},"k:{\"name\":\"log\"}":{".":{},"f:emptyDir":{},"f:name":{}}}}}}},"manager":"Mozilla","operation":"Update","time":"2022-02-02T19:12:28Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:kubectl.kubernetes.io/last-applied-configuration":{}}},"f:spec":{"f:template":{"f:spec":{"f:volumes":{"k:{\"name\":\"authproxy\"}":{"f:configMap":{"f:defaultMode":{},"f:name":{}}}}}}}},"manager":"kubectl-client-side-apply","operation":"Update","time":"2022-02-02T19:44:22Z"},{"apiVersion":"apps/v1","fieldsType":"FieldsV1","fieldsV1":{"f:metadata":{"f:annotations":{"f:deployment.kubernetes.io/revision":{}}},"f:status":{"f:conditions":{".":{},"k:{\"type\":\"Available\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}},"k:{\"type\":\"Progressing\"}":{".":{},"f:lastTransitionTime":{},"f:lastUpdateTime":{},"f:message":{},"f:reason":{},"f:status":{},"f:type":{}}},"f:observedGeneration":{},"f:replicas":{},"f:unavailableReplicas":{},"f:updatedReplicas":{}}},"manager":"kube-controller-manager","operation":"Update","subresource":"status","time":"2022-02-03T08:50:21Z"}],"name":"duo-proxy-sso","namespace":"duo-auth-proxy","resourceVersion":"89217863","uid":"1c1ad479-2055-47a6-909c-05856cdbc4dc"},"spec":{"progressDeadlineSeconds":600,"replicas":1,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"duo-proxy-sso"}},"strategy":{"rollingUpdate":{"maxSurge":"25%","maxUnavailable":"25%"},"type":"RollingUpdate"},"template":{"metadata":{"creationTimestamp":null,"labels":{"app":"duo-proxy-sso","deploymentconfig":"duo-proxy-sso"}},"spec":{"containers":[{"image":"image-registry.openshift-image-registry.svc:5000/duo-auth-proxy/duo-proxy-sso@sha256:19d8682e6cbc4f4f7884b72e1a9a34bac263dbb87c95f5c5021f770423ad5c84","imagePullPolicy":"Always","name":"duo-proxy-sso","resources":{},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/duoauthproxy/conf/authproxy.cfg","name":"authproxy","subPath":"config"},{"mountPath":"/etc/duoauthproxy/secrets","name":"auth-proxy-sso-secret","subPath":"config"},{"mountPath":"/opt/duoauthproxy/log","name":"log"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30,"volumes":[{"configMap":{"defaultMode":420,"name":"authproxy-sso.cfg"},"name":"authproxy"},{"configMap":{"defaultMode":420,"name":"auth-proxy-sso-secret"},"name":"auth-proxy-sso-secret"},{"emptyDir":{},"name":"log"}]}}},"status":{"conditions":[{"lastTransitionTime":"2022-02-02T18:39:05Z","lastUpdateTime":"2022-02-03T08:23:20Z","message":"ReplicaSet \"duo-proxy-sso-65678fb7b7\" has successfully progressed.","reason":"NewReplicaSetAvailable","status":"True","type":"Progressing"},{"lastTransitionTime":"2022-02-03T08:50:21Z","lastUpdateTime":"2022-02-03T08:50:21Z","message":"Deployment does not have minimum availability.","reason":"MinimumReplicasUnavailable","status":"False","type":"Available"}],"observedGeneration":15,"replicas":1,"unavailableReplicas":1,"updatedReplicas":1}}
+    openshift.io/generated-by: OpenShiftWebConsole
+  creationTimestamp: "2022-02-02T13:47:08Z"
+  generation: 18
+  labels:
+    app: duo-proxy-sso
+    app.kubernetes.io/component: duo-proxy-sso
+    app.kubernetes.io/instance: duo-proxy-sso
+    app.kubernetes.io/name: duo-proxy-sso
+    app.kubernetes.io/part-of: duoauthproxy-app
+  managedFields:
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:template:
+            f:spec:
+              f:containers:
+                k:{"name":"duo-proxy-sso"}:
+                  f:image: {}
+      manager: openshift-controller-manager
+      operation: Update
+      time: "2022-02-02T18:39:05Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:alpha.image.policy.openshift.io/resolve-names: {}
+            f:app.openshift.io/vcs-ref: {}
+            f:app.openshift.io/vcs-uri: {}
+            f:image.openshift.io/triggers: {}
+            f:openshift.io/generated-by: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:app.kubernetes.io/component: {}
+            f:app.kubernetes.io/instance: {}
+            f:app.kubernetes.io/name: {}
+            f:app.kubernetes.io/part-of: {}
+        f:spec:
+          f:progressDeadlineSeconds: {}
+          f:replicas: {}
+          f:revisionHistoryLimit: {}
+          f:selector: {}
+          f:strategy:
+            f:rollingUpdate:
+              .: {}
+              f:maxSurge: {}
+              f:maxUnavailable: {}
+            f:type: {}
+          f:template:
+            f:metadata:
+              f:labels:
+                .: {}
+                f:app: {}
+                f:deploymentconfig: {}
+            f:spec:
+              f:containers:
+                k:{"name":"duo-proxy-sso"}:
+                  .: {}
+                  f:imagePullPolicy: {}
+                  f:name: {}
+                  f:resources: {}
+                  f:terminationMessagePath: {}
+                  f:terminationMessagePolicy: {}
+                  f:volumeMounts:
+                    .: {}
+                    k:{"mountPath":"/opt/duoauthproxy/conf/authproxy.cfg"}:
+                      .: {}
+                      f:mountPath: {}
+                      f:name: {}
+                      f:subPath: {}
+                    k:{"mountPath":"/opt/duoauthproxy/log"}:
+                      .: {}
+                      f:mountPath: {}
+                      f:name: {}
+              f:dnsPolicy: {}
+              f:restartPolicy: {}
+              f:schedulerName: {}
+              f:securityContext: {}
+              f:terminationGracePeriodSeconds: {}
+              f:volumes:
+                .: {}
+                k:{"name":"authproxy"}:
+                  .: {}
+                  f:configMap: {}
+                  f:name: {}
+                k:{"name":"log"}:
+                  .: {}
+                  f:emptyDir: {}
+                  f:name: {}
+      manager: Mozilla
+      operation: Update
+      time: "2022-02-02T19:12:28Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          f:template:
+            f:spec:
+              f:containers:
+                k:{"name":"duo-proxy-sso"}:
+                  f:volumeMounts:
+                    k:{"mountPath":"/etc/duoauthproxy/secrets"}:
+                      .: {}
+                      f:mountPath: {}
+                      f:name: {}
+                      f:subPath: {}
+              f:volumes:
+                k:{"name":"auth-proxy-sso-secret"}:
+                  .: {}
+                  f:configMap:
+                    .: {}
+                    f:defaultMode: {}
+                    f:name: {}
+                  f:name: {}
+                k:{"name":"authproxy"}:
+                  f:configMap:
+                    f:defaultMode: {}
+                    f:name: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: "2022-02-03T08:54:01Z"
+    - apiVersion: apps/v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            f:deployment.kubernetes.io/revision: {}
+        f:status:
+          f:conditions:
+            .: {}
+            k:{"type":"Available"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Progressing"}:
+              .: {}
+              f:lastTransitionTime: {}
+              f:lastUpdateTime: {}
+              f:message: {}
+              f:reason: {}
+              f:status: {}
+              f:type: {}
+          f:observedGeneration: {}
+          f:replicas: {}
+          f:unavailableReplicas: {}
+          f:updatedReplicas: {}
+      manager: kube-controller-manager
+      operation: Update
+      subresource: status
+      time: "2022-02-04T10:28:47Z"
+  name: duo-proxy-sso
+  namespace: duo-auth-proxy
+  resourceVersion: "90936524"
+  uid: 1c1ad479-2055-47a6-909c-05856cdbc4dc
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: duo-proxy-sso
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: duo-proxy-sso
+        deploymentconfig: duo-proxy-sso
+    spec:
+      containers:
+        - image: image-registry.openshift-image-registry.svc:5000/duo-auth-proxy/duo-proxy-sso@sha256:fad9db55dd73e275f277059c91ed095ccfdec9d658335624578ed2523067c6e2
+          imagePullPolicy: Always
+          name: duo-proxy-sso
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /opt/duoauthproxy/conf/authproxy.cfg
+              name: authproxy
+              subPath: config
+            - mountPath: /opt/duoauthproxy/log
+              name: log
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: authproxy-sso.cfg
+          name: authproxy
+        - emptyDir: {}
+          name: log
+status:
+  conditions:
+    - lastTransitionTime: "2022-02-02T18:39:05Z"
+      lastUpdateTime: "2022-02-04T10:22:59Z"
+      message: ReplicaSet "duo-proxy-sso-5788447fbc" has successfully progressed.
+      reason: NewReplicaSetAvailable
+      status: "True"
+      type: Progressing
+    - lastTransitionTime: "2022-02-04T10:28:47Z"
+      lastUpdateTime: "2022-02-04T10:28:47Z"
+      message: Deployment does not have minimum availability.
+      reason: MinimumReplicasUnavailable
+      status: "False"
+      type: Available
+  observedGeneration: 18
+  replicas: 1
+  unavailableReplicas: 1
+  updatedReplicas: 1
